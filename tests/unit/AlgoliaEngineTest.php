@@ -246,4 +246,10 @@ class AlgoliaEngineTest extends Unit
     {
         $this->assertEquals(0, $this->engine->getTotalRecords());
     }
+
+    /** @test * */
+    public function it_can_get_proxy_client_methods()
+    {
+        $this->assertInstanceOf(SearchClient::class, $this->engine->get());
+    }
 }
