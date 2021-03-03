@@ -2,10 +2,10 @@
 
 namespace rias\scout\jobs;
 
-use Craft;
 use craft\base\Element;
 use craft\queue\BaseJob;
-use rias\scout\engines\Engine;
+use rias\scout\Scout;
+use rias\scout\ScoutIndex;
 
 class MakeSearchable extends BaseJob
 {
@@ -27,15 +27,7 @@ class MakeSearchable extends BaseJob
             return;
         }
 
-        $engine = $element->searchableUsing()->first(function (Engine $engine) {
-            return $engine->scoutIndex->indexName === $this->indexName;
-        });
-
-        if (!$engine) {
-            return;
-        }
-
-        $engine->update($element);
+        $this->getEngine()->update($element);
 
         if ($this->propagate) {
             $element->searchableRelations();
@@ -64,6 +56,22 @@ class MakeSearchable extends BaseJob
      */
     private function getElement()
     {
-        return Craft::$app->getElements()->getElementById($this->id, null, $this->siteId);
+        return $this->getIndex()
+            ->criteria
+            ->id($this->id)
+            ->siteId($this->siteId)
+            ->one();
+    }
+
+    protected function getEngine()
+    {
+        return Scout::$plugin->getSettings()->getEngine($this->getIndex());
+    }
+
+    protected function getIndex()
+    {
+        return Scout::$plugin->getSettings()->getIndices()->first(function (ScoutIndex $scoutindex) {
+            return $scoutindex->indexName === $this->indexName;
+        });
     }
 }
