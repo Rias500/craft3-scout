@@ -21,11 +21,11 @@
         }
     ],
     "require": {
-        "php": ">=7.1",
+        "php": ">=7.4",
         "craftcms/cms": "^3.3.0",
         "algolia/algoliasearch-client-php": "^2.3",
         "league/fractal": "^0.18|^0.19",
-        "tightenco/collect": "^5.8|^6.0|^7.0"
+        "illuminate/collections": "^8.40"
     },
     "repositories": [
         {
@@ -39,7 +39,7 @@
         "codeception/module-asserts": "^1.1.1",
         "codeception/lib-asserts": "^1.1.0",
         "codeception/module-yii2": "^1.1.0",
-        "phpunit/phpunit": "^7.5.20"
+        "phpunit/phpunit": "^9.3.3"
     },
     "autoload": {
         "psr-4": {
