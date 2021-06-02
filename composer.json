@@ -25,7 +25,7 @@
         "craftcms/cms": "^3.3.0",
         "algolia/algoliasearch-client-php": "^2.3",
         "league/fractal": "^0.18|^0.19",
-        "tightenco/collect": "^5.8|^6.0|^7.0"
+        "tightenco/collect": "^8.0.4"
     },
     "repositories": [
         {
