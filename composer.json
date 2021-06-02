@@ -34,7 +34,7 @@
         }
     ],
     "require-dev": {
-        "vlucas/phpdotenv": "^4.1.0",
+        "vlucas/phpdotenv": "^5.3.0",
         "codeception/codeception": "^4.1.1",
         "codeception/module-asserts": "^1.1.1",
         "codeception/lib-asserts": "^1.1.0",
