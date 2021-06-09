@@ -112,6 +112,10 @@ class SearchableBehavior extends Behavior
 
     public function searchableRelations()
     {
+        if (!Scout::$plugin->getSettings()->indexRelations) {
+            return;
+        }
+
         $this->getRelatedElements()->each(function (Element $relatedElement) {
             /* @var SearchableBehavior $relatedElement */
             $relatedElement->searchable(false);

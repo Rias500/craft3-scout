@@ -19,6 +19,9 @@ class Settings extends Model
     public $sync = true;
 
     /** @var bool */
+    public $indexRelations = true;
+
+    /** @var bool */
     public $queue = true;
 
     /** @var string */

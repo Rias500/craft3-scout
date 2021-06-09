@@ -133,6 +133,32 @@ class EventHandlersTest extends Unit
     }
 
     /** @test * */
+    public function it_doesnt_update_related_elements_when_indexRelations_is_false()
+    {
+        $this->scout->setSettings(['indexRelations' => false]);
+
+        $relationField = new Entries([
+            'name'   => 'Entry field',
+            'handle' => 'entryField',
+        ]);
+
+        Craft::$app->getFields()->saveField($relationField);
+
+        Craft::$app->getRelations()->saveRelations($relationField, $this->element, [$this->element2->id]);
+
+        Craft::$app->getCache()->set("scout-Blog-{$this->element->id}-updateCalled", 0);
+        Craft::$app->getCache()->set("scout-Blog-{$this->element2->id}-updateCalled", 0);
+
+        $this->assertEquals(0, Craft::$app->getCache()->get("scout-Blog-{$this->element->id}-updateCalled"));
+        $this->assertEquals(0, Craft::$app->getCache()->get("scout-Blog-{$this->element2->id}-updateCalled"));
+
+        Craft::$app->getElements()->saveElement($this->element);
+
+        $this->assertEquals(0, Craft::$app->getCache()->get("scout-Blog-{$this->element->id}-updateCalled"));
+        $this->assertEquals(0, Craft::$app->getCache()->get("scout-Blog-{$this->element2->id}-updateCalled"));
+    }
+
+    /** @test * */
     public function it_doesnt_to_anything_when_sync_is_false()
     {
         $this->scout->setSettings(['sync' => false]);
