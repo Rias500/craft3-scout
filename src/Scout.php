@@ -163,7 +163,9 @@ class Scout extends Plugin
             function (ElementEvent $event) {
                 /** @var SearchableBehavior $element */
                 $element = $event->element;
-                $this->beforeDeleteRelated = $element->getRelatedElements();
+                if ($element->shouldBeSearchable()) {
+                    $this->beforeDeleteRelated = $element->getRelatedElements();
+                }
             }
         );
 
@@ -173,13 +175,16 @@ class Scout extends Plugin
             function (ElementEvent $event) {
                 /** @var SearchableBehavior $element */
                 $element = $event->element;
-                $element->unsearchable();
 
-                if ($this->beforeDeleteRelated) {
-                    $this->beforeDeleteRelated->each(function (Element $relatedElement) {
-                        /* @var SearchableBehavior $relatedElement */
-                        $relatedElement->searchable(false);
-                    });
+                if ($element->shouldBeSearchable()) {
+                    $element->unsearchable();
+
+                    if ($this->beforeDeleteRelated) {
+                        $this->beforeDeleteRelated->each(function (Element $relatedElement) {
+                            /* @var SearchableBehavior $relatedElement */
+                            $relatedElement->searchable(false);
+                        });
+                    }
                 }
             }
         );
